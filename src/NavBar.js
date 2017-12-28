@@ -80,7 +80,7 @@ class NavBar extends React.Component {
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
                         <NavItem>
-                            <NavLink height="10px" href="https://github.com/reactstrap/reactstrap">Github</NavLink>
+                            <NavLink href="https://github.com/baus/cognito-strap">Github</NavLink>
                         </NavItem>
                         {userElement}
                     </Nav>
