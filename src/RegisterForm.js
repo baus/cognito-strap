@@ -55,7 +55,7 @@ class RegisterForm extends React.Component {
         return (
             <Form className='form' onSubmit={this.onSubmit}>
                 <h2 className="form-signin-heading">Sign up</h2>
-                <EmailInput onChange={this.changeUsername} />
+                <EmailInput value={this.state.username} onChange={this.changeUsername} />
                 <PasswordInput onChange={this.changePassword} />
                 <SubmitButton>Sign up</SubmitButton>
                 <div>&nbsp;</div>

@@ -18,6 +18,7 @@ export const EmailInput = (props) => {
                    name="email"
                    id="inputEmail"
                    onChange={props.onChange}
+                   value={props.value}
             />
         </div>
     )
