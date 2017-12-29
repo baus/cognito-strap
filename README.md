@@ -1,10 +1,10 @@
-This is project is boiler plate to start new web applications using AWS Cognito, React, and Bootstrap. You can fork the
+This is a boilerplate project for new web applications using AWS Cognito, React, and Bootstrap. You can fork the
 repository to start a new project.
 
 Notes:
 
 * Discussion on exposing poolData on the client: https://github.com/aws/amazon-cognito-identity-js/issues/312
-* The Cognito sample code is out of date with the latest Cognito JS API
+* The sample code is out of date with the latest Cognito JS API
 * reactstrap should have NavbarText element
 * Saw this issue in react-cognito: https://github.com/isotoma/react-cognito/issues/21
 
