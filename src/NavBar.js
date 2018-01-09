@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link, Redirect} from 'react-router-dom';
-import {Logout} from 'react-cognito';
-import {
+    import {
     Collapse,
     Navbar,
     NavbarToggler,

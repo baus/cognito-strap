@@ -24,9 +24,11 @@ class LandingPage extends React.Component {
 
     render() {
         if (this.state.signup) {
-            const redirectPage = '/register?username=' + encodeURIComponent(this.state.email);
-
-            return (<Redirect push to={redirectPage} />);
+            let redirectLink = '/register';
+            if(this.state.email && this.state.email !== '') {
+                redirectLink += '?username=' + encodeURIComponent(this.state.email);
+            }
+            return (<Redirect push to={redirectLink}/>);
         }
 
         return (

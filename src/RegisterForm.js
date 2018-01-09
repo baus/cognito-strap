@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {registerUser} from 'react-cognito';
+import {registerUser} from './cognitoUtil';
 import {Redirect} from 'react-router-dom';
 import {Form, Alert} from 'reactstrap';
 import queryString from 'query-string';
@@ -22,33 +22,30 @@ class RegisterForm extends React.Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        const {store} = this.context;
-        const state = store.getState();
-        const userPool = state.cognito.userPool;
-        const config = state.cognito.config;
-        registerUser(userPool, config, this.state.username, this.state.password, {
-            email: this.state.email,
-        }).then(
-            (action) => {
-                store.dispatch(action);
+        registerUser(this.state.username, this.state.password, (err, user) => {
+            if (err) {
+                this.setState({error: err.message});
+            } else {
                 this.setState({verify: true});
-            },
-            error => this.setState({error})
-        );
-    }
+            }
+        });
+    };
 
     changeUsername = (event) => {
         this.setState({username: event.target.value});
-    }
+    };
 
     changePassword = (event) => {
         this.setState({password: event.target.value});
-    }
+    };
 
 
     render() {
         if (this.state.verify) {
-            const redirectLink = '/verify?username=' + encodeURIComponent(this.state.username);
+            let redirectLink = '/verify';
+            if(this.state.username && this.state.username !== '') {
+                redirectLink += '?username=' + encodeURIComponent(this.state.username);
+            }
             return (<Redirect push to={redirectLink}/>);
         }
         const alert = this.state.error ? (<Alert color="danger">{this.state.error}</Alert>) : (<div/>);

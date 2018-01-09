@@ -2,12 +2,15 @@ import React from 'react';
 import {Form, Label, Input, Alert} from 'reactstrap';
 import {Redirect} from 'react-router-dom';
 import {FormContainer, SubmitButton} from './FormComponents';
+import {resendVerficationCode, verifyUser} from './cognitoUtil';
+import queryString from "query-string";
 
 class ConfirmForm extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            username: queryString.parse(props.location.search).username,
             error: '',
             verificationCode: '',
             validated: false
@@ -16,30 +19,29 @@ class ConfirmForm extends React.Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        this.props.onSubmit(this.state.verificationCode)
-            .then((user) => {
+        verifyUser(this.state.username, this.state.verificationCode, (err, result) => {
+            if (err) {
+                this.setState({error: err.message});
+            } else {
                 this.setState({validated: true});
-            })
-            .catch((error) => {
-                this.setState({error: "Couldn't verify code"});
-            });
-    }
+            }
+        });
+    };
 
     onResend = (event) => {
         event.preventDefault();
-        this.props.onResend()
-            .then((user) => {
+        resendVerficationCode(this.state.username, (err, result) => {
+            if (err) {
+                this.setState({error: err.message});
+            } else {
                 this.setState({error: 'Code resent'});
-            })
-            .catch((error) => {
-                this.setState({error});
-            });
-
-    }
+            }
+        });
+    };
 
     changeVerificationCode = (event) => {
         this.setState({verificationCode: event.target.value});
-    }
+    };
 
     render() {
         if (this.state.validated) {

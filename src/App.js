@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {PasswordReset, Login, Confirm} from 'react-cognito';
+import {PasswordReset} from 'react-cognito';
 
 import RootPage from './RootPage';
 import RegisterForm from './RegisterForm.js';
@@ -28,28 +28,6 @@ const passwordReset = () => (
     </PasswordReset>
 );
 
-const registerForm = (props) => {
-    return (
-        <div>
-            <RegisterForm location={props.location}/>
-        </div>
-    );
-};
-
-const logInPage = (props) => {
-    return (
-        <LoginForm location={props.location} state={props.state}/>
-    )
-};
-
-const confirmForm = (props) => {
-    return (
-        <Confirm>
-            <ConfirmForm username={props.match.params[1]}/>
-        </Confirm>
-    );
-};
-
 const mapStateToProps = state => {
     return {
         state: state.cognito.state,
@@ -60,7 +38,6 @@ const mapStateToProps = state => {
 
 const ConnectedProfile = connect(mapStateToProps, null)(Profile);
 const ConnectedFooter = connect(mapStateToProps, null)(Footer);
-const ConnectedRegister = connect(mapStateToProps, null)(registerForm);
 
 class App extends React.Component {
     constructor(props) {
@@ -90,11 +67,11 @@ class App extends React.Component {
                                render={(props) => (<LoginForm onLoggedIn={this.onLoggedIn.bind(this)} {...props}/>)}
                         />
                         <Route exact path="/profile" component={ConnectedProfile}/>
-                        <Route exact path="/register" component={ConnectedRegister}/>
+                        <Route exact path="/register" component={RegisterForm}/>
                         <Route exact path="/reset" component={passwordReset}/>
                         <Route exact path="/change_password" component={ChangePasswordForm}/>
                         <Route exact path="/change_email" component={updateEmail}/>
-                        <Route path="/verify" component={confirmForm}/>
+                        <Route path="/verify" component={ConfirmForm}/>
                         <ConnectedFooter/>
                     </div>
                 </Router>
