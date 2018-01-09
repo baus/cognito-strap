@@ -30,7 +30,7 @@ export function getUserEmail(callback) {
     let email = null;
     if (cognitoUser != null) {
         cognitoUser.getSession(function (err, session) {
-            cognitoUser.getUserAttributes( (err, result) => {
+            cognitoUser.getUserAttributes((err, result) => {
                 let emailAttrib = result.find(attrib => attrib.getName() === 'email');
                 email = emailAttrib.getValue();
                 callback(email);
@@ -68,7 +68,7 @@ export function registerUser(username, password, callback) {
     });
 }
 
-export function verifyUser(username, code, callback){
+export function verifyUser(username, code, callback) {
     const userPool = new CognitoUserPool({
         UserPoolId: config.userPool,
         ClientId: config.clientId
@@ -86,7 +86,7 @@ export function verifyUser(username, code, callback){
     });
 }
 
-export function resendVerficationCode(username, callback){
+export function resendVerficationCode(username, callback) {
     const userPool = new CognitoUserPool({
         UserPoolId: config.userPool,
         ClientId: config.clientId
@@ -104,6 +104,44 @@ export function resendVerficationCode(username, callback){
     });
 }
 
+export function forgotPassword(username, callback) {
+    const userPool = new CognitoUserPool({
+        UserPoolId: config.userPool,
+        ClientId: config.clientId
+    });
+    const cognitoUser = new CognitoUser({
+        Username: username,
+        Pool: userPool
+    });
+    cognitoUser.forgotPassword({
+        onSuccess: function (result) {
+            callback(null, result);
+        },
+        onFailure: function (err) {
+            callback(err, null);
+        }
+    });
+}
+
+export function confirmForgottenPassword(username, code, password, callback) {
+    const userPool = new CognitoUserPool({
+        UserPoolId: config.userPool,
+        ClientId: config.clientId
+    });
+    const cognitoUser = new CognitoUser({
+        Username: username,
+        Pool: userPool
+    });
+    cognitoUser.confirmPassword(code, password, {
+        onFailure: (err) => {
+            callback(err)
+        },
+        onSuccess: () => {
+            callback(null);
+        }
+    });
+}
+
 export function logOut() {
-   getCurrentUser().signOut();
+    getCurrentUser().signOut();
 }

@@ -4,13 +4,13 @@ import {connect} from 'react-redux';
 import {PasswordReset} from 'react-cognito';
 
 import RootPage from './RootPage';
-import RegisterForm from './RegisterForm.js';
+import RegisterForm from './RegisterForm';
 import ChangePasswordForm from './ChangePasswordForm';
 import UpdateEmailForm from './UpdateEmailForm';
 import PasswordResetForm from './PasswordResetForm';
-import LoginForm from './LoginForm.jsx';
-import ConfirmForm from './ConfirmForm.jsx';
-import Profile from './Profile.js';
+import LoginForm from './LoginForm';
+import ConfirmForm from './ConfirmForm';
+import Profile from './Profile';
 import NavBar from './NavBar';
 import Footer from './footer';
 import {getUserEmail, logOut} from "./cognitoUtil";
@@ -20,12 +20,6 @@ const updateEmail = () => (
         <UpdateEmailForm/>
         <Link to="/">Home</Link>
     </div>
-);
-
-const passwordReset = () => (
-    <PasswordReset>
-        <PasswordResetForm/>
-    </PasswordReset>
 );
 
 const mapStateToProps = state => {
@@ -68,7 +62,7 @@ class App extends React.Component {
                         />
                         <Route exact path="/profile" component={ConnectedProfile}/>
                         <Route exact path="/register" component={RegisterForm}/>
-                        <Route exact path="/reset" component={passwordReset}/>
+                        <Route exact path="/reset" component={PasswordResetForm}/>
                         <Route exact path="/change_password" component={ChangePasswordForm}/>
                         <Route exact path="/change_email" component={updateEmail}/>
                         <Route path="/verify" component={ConfirmForm}/>
