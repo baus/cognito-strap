@@ -25,6 +25,10 @@ class UserDropDown extends React.Component {
         this.setState({navTo: '/profile'});
     }
 
+    logout() {
+        this.props.onLoggedOut();
+    }
+
     render() {
         if (this.state.navTo) {
             return (<Redirect push to={this.state.navTo}/>);
@@ -37,9 +41,7 @@ class UserDropDown extends React.Component {
                 <DropdownMenu>
                     <DropdownItem onClick={this.navigateToProfile.bind(this)}>Profile</DropdownItem>
                     <DropdownItem divider/>
-                    <Logout>
-                        <DropdownItem>Logout</DropdownItem>
-                    </Logout>
+                    <DropdownItem onClick={this.logout.bind(this)}>Logout</DropdownItem>
                 </DropdownMenu>
             </UncontrolledDropdown>
         )
@@ -62,15 +64,20 @@ class NavBar extends React.Component {
         };
     }
 
+    logout() {
+        this.props.onLoggedOut();
+    }
+
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen
         });
     }
 
+
     render() {
-        const email = this.props.attributes.email;
-        const userElement = email ? (<UserDropDown username={email}/>) : (
+        const userElement = this.props.email ? (<UserDropDown onLoggedOut={this.logout.bind(this)}
+                                                              username={this.props.email}/>) : (
             <Link className="nav-link" to="/login">Login</Link>);
 
         return (

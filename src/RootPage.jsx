@@ -7,13 +7,13 @@ import EmailVerificationForm from './EmailVerificationForm';
 import NewPasswordRequiredForm from './NewPasswordRequiredForm';
 import ConfirmForm from './ConfirmForm';
 import LandingPage from './LandingPage';
+import {isUserLoggedIn} from "./cognitoUtil";
 
 const loggedInPage = (user, attributes) => (
     <ContentContainer>
         <h2>This is the main application page</h2>
     </ContentContainer>
 );
-
 
 
 const newPasswordPage = () => (
@@ -51,6 +51,11 @@ const mfaPage = () => (
 );
 
 const RootPage = ({state, user, attributes}) => {
+    if (isUserLoggedIn() === true) {
+        return loggedInPage(user, attributes);
+    } else {
+        return (<LandingPage/>);
+    }
     switch (state) {
         case CognitoState.LOGGED_IN:
             return loggedInPage(user, attributes);
@@ -58,7 +63,7 @@ const RootPage = ({state, user, attributes}) => {
         case CognitoState.LOGGING_IN:
         case CognitoState.LOGGED_OUT:
         case CognitoState.LOGIN_FAILURE:
-            return (<LandingPage />);
+            return (<LandingPage/>);
         case CognitoState.MFA_REQUIRED:
             return mfaPage();
         case CognitoState.NEW_PASSWORD_REQUIRED:

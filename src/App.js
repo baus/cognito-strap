@@ -13,7 +13,7 @@ import ConfirmForm from './ConfirmForm.jsx';
 import Profile from './Profile.js';
 import NavBar from './NavBar';
 import Footer from './footer';
-
+import {getUserEmail, logOut} from "./cognitoUtil";
 
 const updateEmail = () => (
     <div>
@@ -38,9 +38,7 @@ const registerForm = (props) => {
 
 const logInPage = (props) => {
     return (
-        <Login>
-            <LoginForm location={props.location} state={props.state}/>
-        </Login>
+        <LoginForm location={props.location} state={props.state}/>
     )
 };
 
@@ -61,20 +59,36 @@ const mapStateToProps = state => {
 };
 
 const ConnectedProfile = connect(mapStateToProps, null)(Profile);
-const ConnectedNavBar = connect(mapStateToProps, null)(NavBar);
 const ConnectedFooter = connect(mapStateToProps, null)(Footer);
-const ConnectedLogin = connect(mapStateToProps, null)(logInPage);
 const ConnectedRegister = connect(mapStateToProps, null)(registerForm);
 
-class App extends Component {
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: null
+        }
+    }
+    onLoggedIn(email){
+        this.setState({email: email});
+    }
+    onLoggedOut() {
+        logOut();
+        this.setState({email: null});
+    }
+    componentWillMount() {
+        getUserEmail(email => this.setState({email: email}));
+    }
     render() {
         return (
             <div className="page-container">
                 <Router>
                     <div>
-                        <ConnectedNavBar/>
+                        <NavBar email={this.state.email} onLoggedOut={this.onLoggedOut.bind(this)}/>
                         <Route exact path="/" component={RootPage}/>
-                        <Route exact path="/login" component={ConnectedLogin}/>
+                        <Route exact path="/login"
+                               render={(props) => (<LoginForm onLoggedIn={this.onLoggedIn.bind(this)} {...props}/>)}
+                        />
                         <Route exact path="/profile" component={ConnectedProfile}/>
                         <Route exact path="/register" component={ConnectedRegister}/>
                         <Route exact path="/reset" component={passwordReset}/>
