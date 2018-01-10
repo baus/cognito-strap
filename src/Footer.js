@@ -6,7 +6,7 @@ class Footer extends React.Component {
         return (
             <footer className="footer">
                 <div className="container">
-                    <span className="text-muted">copyright 2017 christopher@baus.net &middot; Cognito state: {this.props.state} </span>
+                    <span className="text-muted">copyright 2017-2018 christopher@baus.net</span>
                 </div>
             </footer>
         );

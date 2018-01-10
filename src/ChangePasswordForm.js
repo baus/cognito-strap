@@ -19,10 +19,8 @@ class ChangePasswordForm extends React.Component {
         event.preventDefault();
         changePassword(this.state.oldPassword, this.state.newPassword, (err, results) => {
             if (!err) {
-                console.log('success');
                 this.setState({error: 'Password changed'});
             } else {
-                console.log('err');
                 this.setState({error: err.message});
             }
         });

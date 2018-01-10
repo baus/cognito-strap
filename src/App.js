@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {PasswordReset} from 'react-cognito';
+import React from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import RootPage from './RootPage';
 import RegisterForm from './RegisterForm';
@@ -11,18 +9,8 @@ import LoginForm from './LoginForm';
 import ConfirmForm from './ConfirmForm';
 import Profile from './Profile';
 import NavBar from './NavBar';
-import Footer from './footer';
+import Footer from './Footer';
 import {getUserEmail, logOut} from "./cognitoUtil";
-
-const mapStateToProps = state => {
-    return {
-        state: state.cognito.state,
-        user: state.cognito.user,
-        attributes: state.cognito.attributes,
-    }
-};
-
-const ConnectedFooter = connect(mapStateToProps, null)(Footer);
 
 class App extends React.Component {
     constructor(props) {
@@ -56,7 +44,7 @@ class App extends React.Component {
                         <Route exact path="/reset" component={PasswordResetForm}/>
                         <Route exact path="/change_password" component={ChangePasswordForm}/>
                         <Route path="/verify" component={ConfirmForm}/>
-                        <ConnectedFooter/>
+                        <Footer/>
                     </div>
                 </Router>
             </div>
