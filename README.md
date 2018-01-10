@@ -1,5 +1,10 @@
-This is a boilerplate project for new web applications using AWS Cognito, React, and Bootstrap. You can fork the
-repository to start a new project.
+# CognitoStrap
+
+CognitoStrap is a boilerplate project for new web applications using [AWS Cognito](https://aws.amazon.com/cognito/), 
+[React](https://reactjs.org/), and [Bootstrap](https://getbootstrap.com/). You can fork the repository to start a 
+new project.
+
+Example is here: [CognitoStrap](http://cognitostrap.org) 
 
 Notes:
 
@@ -10,8 +15,6 @@ Notes:
 
 TODO:
 
-* Remove dependency on Redux and react-cognito
-* Implement change password workflow
-* Implement change email? Is this possible?
+* Implement change email. Is this possible?
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
