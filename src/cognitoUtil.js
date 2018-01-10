@@ -26,14 +26,22 @@ export function isUserLoggedIn() {
 }
 
 export function getUserEmail(callback) {
+    getUserAttributes((attribs) => {
+        console.log(attribs);
+        callback(attribs.email);
+    });
+}
+
+export function getUserAttributes(callback) {
     const cognitoUser = getCurrentUser();
-    let email = null;
     if (cognitoUser != null) {
-        cognitoUser.getSession(function (err, session) {
+        cognitoUser.getSession((err, session) => {
             cognitoUser.getUserAttributes((err, result) => {
-                let emailAttrib = result.find(attrib => attrib.getName() === 'email');
-                email = emailAttrib.getValue();
-                callback(email);
+                const attributes = {};
+                result.forEach(attrib => {
+                    attributes[attrib.getName()] = attrib.getValue();
+                });
+                callback(attributes);
             });
         });
     } else {
@@ -139,6 +147,13 @@ export function confirmForgottenPassword(username, code, password, callback) {
         onSuccess: () => {
             callback(null);
         }
+    });
+}
+
+export function changePassword(oldPassword, newPassword, callback) {
+    const user = getCurrentUser();
+    user.getSession((err, session) => {
+        user.changePassword(oldPassword, newPassword, (err, result) => callback(err, result));
     });
 }
 

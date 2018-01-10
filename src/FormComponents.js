@@ -6,7 +6,7 @@ export const FormContainer = (props) => {
         <Container className="form-container">
             {props.children}
         </Container>
-    )
+    );
 };
 
 export const EmailInput = (props) => {
@@ -21,25 +21,26 @@ export const EmailInput = (props) => {
                    value={props.value}
             />
         </div>
-    )
+    );
 };
 
 export const PasswordInput = (props) => {
+    const label = props.label ? props.label:'Password';
     return (
         <div>
             <Label className="sr-only" for="inputPassword">Password</Label>
-            <Input placeholder="Password"
+            <Input placeholder={label}
                    name="password"
                    id="inputPassword"
                    onChange={props.onChange}
                    type="password"
             />
         </div>
-    )
+    );
 };
 
 export const SubmitButton = (props) => {
     return (
         <Button color="primary" size="lg" type="submit" value="Submit" block>{props.children}</Button>
-    )
+    );
 };

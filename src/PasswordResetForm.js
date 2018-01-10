@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Form, Label, Input, Alert} from 'reactstrap';
+import {Form, Label, Input, Alert} from 'reactstrap';
 import {forgotPassword, confirmForgottenPassword} from "./cognitoUtil";
 import {EmailInput, PasswordInput, SubmitButton} from './FormComponents';
 
@@ -70,7 +70,6 @@ class PasswordResetForm extends React.Component {
             <div>
                 <Form className="form" onSubmit={this.sendVerificationCode.bind(this)}>
                     <EmailInput onChange={this.changeUsername}/>
-
                     <SubmitButton>Send verification code</SubmitButton>
                 </Form>
 
@@ -80,7 +79,7 @@ class PasswordResetForm extends React.Component {
                     <PasswordInput onChange={this.changePassword}/>
 
                     <SubmitButton>Set new password</SubmitButton>
-                    <br/>
+                    <div>&nbsp;</div>
                     <div>
                         {alert}
                     </div>

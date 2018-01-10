@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import {Form, Label, Alert} from 'reactstrap';
-import {EmailInput, PasswordInput, SubmitButton} from './FormComponents';
+import {EmailInput, FormContainer, PasswordInput, SubmitButton} from './FormComponents';
 import {Config, CognitoIdentityCredentials} from 'aws-sdk';
-import {CognitoUserPool, AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js';
+import {CognitoUserPool, AuthenticationDetails, CognitoUser} from 'amazon-cognito-identity-js';
 import {getUserEmail} from './cognitoUtil.js';
 import config from './config.json';
 
@@ -34,11 +34,11 @@ class LoginForm extends React.Component {
             region: config.region
         });
         Config.credentials.get((err) => {
-            if(err) {
+            if (err) {
                 console.log(err);
             }
             console.log('identityId: ' + Config.credentials.identityId);
-            getUserEmail(email=>{
+            getUserEmail(email => {
                 this.setState({loggedIn: true});
                 this.props.onLoggedIn(email);
             });
@@ -73,8 +73,10 @@ class LoginForm extends React.Component {
             Pool: userPool
         });
 
-        cognitoUser.authenticateUser(authenticationDetails, {onSuccess: this.authenticateUserSuccess.bind(this),
-                                                             onFailure: this.authenticateUserFailure.bind(this)});
+        cognitoUser.authenticateUser(authenticationDetails, {
+            onSuccess: this.authenticateUserSuccess.bind(this),
+            onFailure: this.authenticateUserFailure.bind(this)
+        });
     }
 
     onSubmit = (event) => {
@@ -97,19 +99,21 @@ class LoginForm extends React.Component {
 
         const alert = this.state.error ? (<Alert color="danger">{this.state.error}</Alert>) : (<div/>);
         return (
-            <Form className='form' onSubmit={this.onSubmit}>
-                <h2 className="form-signin-heading">Have an account?</h2>
-                <EmailInput onChange={this.changeUsername}/>
-                <PasswordInput onChange={this.changePassword}/>
-                <div>
-                    <Label><Link to="/reset">Forgot password?</Link></Label>
-                </div>
-                <SubmitButton>Sign in</SubmitButton>
-                <div>
-                    <Label>Don't have an account? <Link to="/register">Register »</Link></Label>
-                </div>
-                {alert}
-            </Form>
+            <FormContainer>
+                <Form className='form' onSubmit={this.onSubmit}>
+                    <h2 className="form-signin-heading">Have an account?</h2>
+                    <EmailInput onChange={this.changeUsername}/>
+                    <PasswordInput onChange={this.changePassword}/>
+                    <div>
+                        <Label><Link to="/reset">Forgot password?</Link></Label>
+                    </div>
+                    <SubmitButton>Sign in</SubmitButton>
+                    <div>
+                        <Label>Don't have an account? <Link to="/register">Register »</Link></Label>
+                    </div>
+                    {alert}
+                </Form>
+            </FormContainer>
 
         );
     }

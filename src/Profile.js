@@ -2,12 +2,23 @@ import React from 'react';
 import {Table} from 'reactstrap';
 import {Redirect, Link} from 'react-router-dom';
 import ContentContainer from './ContentContainer';
-
+import {isUserLoggedIn, getUserAttributes} from "./cognitoUtil";
 
 class Profile extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            attributes: {}
+        }
+    }
+
+    componentWillMount() {
+        getUserAttributes(attribs => this.setState({attributes: attribs}));
+    }
+
     render() {
-        if (!this.props.user) {
+        if (!isUserLoggedIn()) {
             /*
              * Need a more scalable way to do redirects, rather than checking
              * for a logged in user on every page that requires a user.
@@ -25,21 +36,18 @@ class Profile extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {Object.keys(this.props.attributes).map(name =>
+                    {Object.keys(this.state.attributes).map(name =>
                         <tr key={name}>
                             <td>{name}</td>
-                            <td>{this.props.attributes[name]}</td>
+                            <td>{this.state.attributes[name]}</td>
                         </tr>,
                     )}
                     </tbody>
                 </Table>
-                <span>Logged in as {this.props.user.getUsername()}</span>
                 <div>
                     <Link to="/change_password">Change Password »</Link>
                 </div>
-                <div>
-                    <Link to="/change_password">Change Email »</Link>
-                </div>
+
             </ContentContainer>
         )
     };
