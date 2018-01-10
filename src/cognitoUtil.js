@@ -2,6 +2,60 @@ import {Config, CognitoIdentityCredentials} from 'aws-sdk';
 import {CognitoUserPool, AuthenticationDetails, CognitoUser, CognitoUserAttribute} from 'amazon-cognito-identity-js';
 import config from './config.json';
 
+function authenticateUserSuccess(callback, result) {
+    console.log('jwtToken: ' + result.getIdToken().jwtToken);
+    const CognitoIdentityCredentialsParams = {
+        IdentityId: Config.credentials.identityId,
+        IdentityPoolId: config.identityPool,
+        Logins: {}
+    };
+    CognitoIdentityCredentialsParams.Logins['cognito-idp.' + config.region + '.amazonaws.com/' + config.userPool] =
+        result.getIdToken().jwtToken;
+
+    Config.credentials = new CognitoIdentityCredentials(CognitoIdentityCredentialsParams, {
+        region: config.region
+    });
+    Config.credentials.get((err) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log('identityId: ' + Config.credentials.identityId);
+        callback(null, Config.credentials.identityId);
+    });
+}
+
+function authenticateUserFailure(callback, result) {
+    if (result.code === 'UserNotConfirmedException') {
+        // TODO: redirect to verify page in this case
+    }
+    callback(result, null);
+}
+
+export function loginUser(username, password, callback) {
+    Config.region = config.region;
+    Config.credentials = new CognitoIdentityCredentials({
+        IdentityPoolId: config.identityPool
+    });
+    const userPool = new CognitoUserPool({
+        UserPoolId: config.userPool,
+        ClientId: config.clientId
+    });
+    const authenticationDetails = new AuthenticationDetails({
+        Username: username,
+        Password: password
+    });
+
+    const cognitoUser = new CognitoUser({
+        Username: username,
+        Pool: userPool
+    });
+
+    cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: authenticateUserSuccess.bind(this, callback),
+        onFailure: authenticateUserFailure.bind(this, callback)
+    });
+}
+
 export function getCurrentUser() {
     const userPool = new CognitoUserPool({
         UserPoolId: config.userPool,
