@@ -26,7 +26,11 @@ export function isUserLoggedIn() {
 
 export function getUserEmail(callback) {
     getUserAttributes((attribs) => {
-        callback(attribs.email);
+        if (attribs) {
+            callback(attribs.email);
+        } else {
+            callback(null);
+        }
     });
 }
 
