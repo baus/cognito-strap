@@ -55,9 +55,6 @@ class ConfirmForm extends React.Component {
                     <Label className="sr-only">Verification Code</Label>
                     <Input placeholder="Code from email" onChange={this.changeVerificationCode} required/>
                     <div>
-                        &nbsp;
-                    </div>
-                    <div>
                         <SubmitButton>Submit</SubmitButton>
                     </div>
                     <div>

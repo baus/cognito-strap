@@ -55,7 +55,6 @@ class RegisterForm extends React.Component {
                 <EmailInput value={this.state.username} onChange={this.changeUsername} />
                 <PasswordInput onChange={this.changePassword} />
                 <SubmitButton>Sign up</SubmitButton>
-                <div>&nbsp;</div>
                 {alert}
             </Form>
         )

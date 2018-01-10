@@ -5896,15 +5896,11 @@ a.text-dark:focus, a.text-dark:hover {
 .form .form-control:focus {
   z-index: 2; }
 
-.form input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0; }
+.form button {
+  margin-bottom: 10px; }
 
-.form input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0; }
+.form input {
+  margin-bottom: 10px; }
 
 /* Sticky footer styles */
 /* https://getbootstrap.com/docs/4.0/examples/sticky-footer/ */

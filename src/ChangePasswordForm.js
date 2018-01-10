@@ -44,7 +44,6 @@ class ChangePasswordForm extends React.Component {
                     <h2 className="form-signin-heading">Change password</h2>
                     <PasswordInput label="Old Password" onChange={this.changeOldPassword}/>
                     <PasswordInput label="New Password" onChange={this.changeNewPassword}/>
-                    <div>&nbsp;</div>
                     <SubmitButton>Set new password</SubmitButton>
                     {alert}
                 </Form>

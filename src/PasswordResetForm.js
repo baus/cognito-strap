@@ -79,7 +79,6 @@ class PasswordResetForm extends React.Component {
                     <PasswordInput onChange={this.changePassword}/>
 
                     <SubmitButton>Set new password</SubmitButton>
-                    <div>&nbsp;</div>
                     <div>
                         {alert}
                     </div>
