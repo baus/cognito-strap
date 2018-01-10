@@ -16,7 +16,6 @@ export function isUserLoggedIn() {
     if (cognitoUser != null) {
         cognitoUser.getSession(function (err, session) {
             if (err) {
-                console.log(err);
                 userLoggedIn = false;
             }
             userLoggedIn = session.isValid();
@@ -27,7 +26,6 @@ export function isUserLoggedIn() {
 
 export function getUserEmail(callback) {
     getUserAttributes((attribs) => {
-        console.log(attribs);
         callback(attribs.email);
     });
 }
