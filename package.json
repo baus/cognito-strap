@@ -9,7 +9,6 @@
     "node-sass-chokidar": "0.0.3",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
-    "react-cognito": "^1.5.4",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
