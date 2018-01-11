@@ -2,10 +2,7 @@ import React from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import {Form, Label, Alert} from 'reactstrap';
 import {EmailInput, FormContainer, PasswordInput, SubmitButton} from './FormComponents';
-import {Config, CognitoIdentityCredentials} from 'aws-sdk';
-import {CognitoUserPool, AuthenticationDetails, CognitoUser} from 'amazon-cognito-identity-js';
 import {getUserEmail} from './cognitoUtil.js';
-import config from './config.json';
 import {loginUser} from "./cognitoUtil";
 
 class LoginForm extends React.Component {
