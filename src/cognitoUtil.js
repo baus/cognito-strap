@@ -19,7 +19,13 @@ function authenticateUserSuccess(callback, result) {
         if (err) {
             console.log(err);
         }
-        console.log('identityId: ' + Config.credentials.identityId);
+        const credentials = {
+            identityId: Config.credentials.identityId,
+            accessKeyId: Config.credentials.accessKeyId,
+            secretAccessKey: Config.credentials.secretAccessKey,
+            sessionToken: Config.credentials.sessionToken
+        };
+        window.localStorage.setItem('credentials', JSON.stringify(credentials));
         callback(null, Config.credentials.identityId);
     });
 }
@@ -215,4 +221,10 @@ export function changePassword(oldPassword, newPassword, callback) {
 
 export function logOut() {
     getCurrentUser().signOut();
+    window.localStorage.clear();
 }
+
+export function getCachedUserCredentials() {
+    return JSON.parse(window.localStorage.getItem('credentials'));
+}
+
